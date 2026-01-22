@@ -1,0 +1,141 @@
+PROJECT SPECIFICATION — SIMPLE BLOCKCHAIN APPLICATION
+FRAMEWORKS: LARAVEL 12 • POSTGRESQL • REACTJS • DOCKER (OPTIONAL)
+DUE DATE: OCTOBER 24, 2025
+
+SECTION 1: PROJECT OVERVIEW
+This project is an individual project where each student will build a simple blockchain
+application that records and validates transactions while demonstrating the core principles of
+blockchain security and integrity.
+The goal is to help students understand how blockchain ensures data immutability,
+transparency, and decentralized verification, even in a simplified environment.
+
+SECTION 2: PROJECT OBJECTIVES
+By the end of this project, students should be able to:
+• Understand the structure and flow of blockchain transactions.
+• Implement a simple blockchain in Laravel that supports block creation and validation.
+• Apply cryptographic hash functions for data integrity.
+• Demonstrate the immutability and transparency principles of blockchain.
+• Build a simple ReactJS interface for viewing and adding transactions.
+• Integrate PostgreSQL for storing blocks and transactions persistently.
+
+SECTION 3: FUNCTIONAL REQUIREMENTS
+1. Transaction Creation
+○ A user can submit a transaction (e.g., payment or transfer).
+○ Transaction fields include: sender, receiver, amount, and timestamp.
+○ Transactions are temporarily stored in a “pending” state until mined into a block.
+2. Block Creation (Mining Simulation)
+○ The system can group several pending transactions into a block.
+○ Each block includes:
+• Block index (ID)
+
+• Timestamp
+• List of transactions
+• Previous block hash
+• Current block hash
+• Nonce (for proof of work simulation)
+○ Hash is generated using SHA256 combining the above details.
+3. Blockchain Validation
+○ The app should verify that:
+• Each block’s hash is valid.
+• Each block’s previous hash matches the previous block’s hash.
+• The chain is unbroken and unmodified.
+○ If a block is tampered with, the system should detect the invalid chain.
+4. Proof of Work (Simplified)
+○ Implement a basic difficulty rule (e.g., hash must start with two zeros “00”).
+○ The user can click “Mine Block” to simulate mining and generate a valid hash.
+5. Transaction Ledger View
+○ The frontend should display:
+• List of all blocks in the chain.
+• Transactions contained in each block.
+• A visual indicator if the blockchain is valid or broken.
+
+6. Optional Bonus Feature
+○ Allow multiple “nodes” to be simulated via API endpoints to show simple
+synchronization.
+
+SECTION 4: NON-FUNCTIONAL REQUIREMENTS
+• Blockchain data should persist in PostgreSQL.
+• The app should not allow editing or deleting existing blocks.
+• Hashes must be generated using a cryptographic function (SHA256).
+• Laravel API must validate all inputs and enforce numeric and non-empty rules.
+
+• ReactJS frontend must prevent direct editing of blockchain data.
+• Clear and readable UI (use TailwindCSS if available).
+
+SECTION 5: DATABASE DESIGN (RECOMMENDED SCHEMA)
+Table: transactions
+Fields: id, sender, receiver, amount, timestamp, status (pending/mined), created_at, updated_at
+Table: blocks
+Fields: id, index_no, previous_hash, current_hash, nonce, timestamp, created_at, updated_at
+Table: block_transactions (pivot)
+Fields: id, block_id, transaction_id
+
+SECTION 6: BACKEND SPECIFICATION — LARAVEL 12
+Subsection 6.1 API Endpoints
+POST /api/transaction – create a new transaction (pending)
+GET /api/transactions/pending – list all pending transactions
+POST /api/block/mine – create a new block using pending transactions
+GET /api/blocks – list all blocks
+GET /api/blockchain/validate – check blockchain integrity (returns true/false)
+Subsection 6.2 Core Classes
+1. BlockchainService
+○ Responsible for generating hashes and validating the chain.
+2. Block Model
+○ Represents a mined block with relationships to transactions.
+3. Transaction Model
+○ Represents a single pending or mined transaction.
+
+Subsection 6.3 Functions
+
+• generateHash(block) – returns SHA256 hash from block data.
+• validateChain() – loops through all blocks and confirms hash links.
+• mineBlock() – finds a nonce value that satisfies the hash difficulty rule.
+
+SECTION 7: FRONTEND SPECIFICATION — REACTJS
+Subsection 7.1 Pages and Components
+1. Dashboard Page
+○ Buttons: “Create Transaction”, “Mine Block”, “Validate Chain”.
+○ Display blockchain validity status (Valid/Invalid).
+2. Transactions Page
+○ Form for creating a new transaction (sender, receiver, amount).
+○ List of pending transactions.
+3. Blocks Page
+○ Display a list of all blocks with their details and transaction count.
+○ Highlight each block’s hash and previous hash.
+
+Subsection 7.2 Optional Enhancements
+• Use colored boxes or visual links to represent block connections.
+• Add a message log showing mining progress.
+
+SECTION 8: SECURITY IMPLEMENTATION
+• All hashes must use hash('sha256', $data) in Laravel.
+• No direct database editing allowed for blockchain tables.
+• Validation rules:
+● Amount > 0
+● Sender ≠ Receiver
+
+● All fields required
+• Ensure that once a block is mined, it cannot be modified.
+• Use Laravel middleware for API protection (optional).
+
+SECTION 9: SAMPLE WORKFLOW
+1. User creates several transactions (A pays B, B pays C, etc.).
+2. User clicks “Mine Block” → system groups all pending transactions.
+3. System computes hash until valid (proof of work).
+4. Mined block is added to blockchain and saved in database.
+5. All transactions in that block become “mined.”
+6. The user can validate the blockchain — if valid, display “Blockchain is Secure.”
+
+SECTION 10: GRADING CRITERIA (TOTAL 100 POINTS)
+• Functionality (transactions, mining, validation) – 40 points
+• Blockchain security logic (hashing, proof of work, immutability) – 25 points
+• Code organization and documentation – 15 points
+• UI/UX (React design, clarity, usability) – 10 points
+• Presentation and explanation of blockchain principle – 10 points
+
+SECTION 11: SUBMISSION REQUIREMENTS
+• Source code (Laravel backend + React frontend).
+• Database migration and seed files.
+• README.md explaining blockchain logic.
+• Screenshots of transaction creation, mining, and blockchain validation.
+• Short written explanation (1 page) describing how security is ensured.
