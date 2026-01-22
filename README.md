@@ -1,5 +1,5 @@
 
-Access the Demo here : [![Watch the demo video](https://drive.google.com/file/d/1HlkOkh9LQ0muj-l5PFcwlB8N2dzcvMxw/view?usp=sharing)
+[![Watch the demo video](https://img.shields.io/badge/Watch-Demo-blue)](https://drive.google.com/file/d/1HlkOkh9LQ0muj-l5PFcwlB8N2dzcvMxw/view?usp=sharing)
 
 # Simple Blockchain Application
 
